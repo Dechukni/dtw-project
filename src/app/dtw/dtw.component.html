@@ -9,3 +9,18 @@
     </div>
     <button type="submit" mat-raised-button color="primary">Run DTW</button>
 </form>
+
+<div class="visualizer">
+    <table>
+        <tr>
+            <td class="sequence-cell cell-corner"></td>
+            <td class="sequence-cell" *ngFor="let item of firstSequenceItems">
+                {{ item }}
+            </td>
+        </tr>
+        <tr *ngFor="let item of secondSequenceItems">
+            <td class="sequence-cell">{{ item }}</td>
+            <td *ngFor="let empty of firstSequenceItems"></td>
+        </tr>
+    </table>
+</div>

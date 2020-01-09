@@ -1,3 +1,30 @@
+$box-size: 50px;
+$border: 1px solid black;
+
 form {
-    width: 550px;
+  width: 550px;
+}
+
+.visualizer {
+  margin-top: 15px;
+}
+
+table {
+    outline: 0;
+    border: none;
+
+    td {
+        border: $border
+    }
+
+    td.sequence-cell {
+        border: 1px transparent solid;
+        border-right: 0 #ddd solid;
+        border-bottom: 0 #ddd solid;
+        color: #999;
+        min-width: $box-size;
+        line-height: $box-size;
+        text-align: center;
+        vertical-align: middle;
+    }
 }

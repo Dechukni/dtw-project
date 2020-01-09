@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dtw',
@@ -9,8 +9,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class DTWComponent implements OnInit {
   form: FormGroup;
+  firstSequenceItems: Array<number>;
+  secondSequenceItems: Array<number>;
 
-  constructor(private readonly fb: FormBuilder) { }
+  constructor(private readonly fb: FormBuilder,
+              private readonly cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.buildForm();
@@ -18,13 +21,22 @@ export class DTWComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      firstSequence: [null],
-      secondSequence: [null]
-    })
+      firstSequence: ['1 2 3 4 5 6 7', Validators.required],
+      secondSequence: ['9 8 7 6 5 4 1', Validators.required]
+    }) 
   }
 
   runDtw() {
-    console.log('Run DTW', this.form.value);
+    if (this.form.valid) {
+      this.firstSequenceItems = this.formValueToArray(this.form.value.firstSequence);
+      this.secondSequenceItems = this.formValueToArray(this.form.value.secondSequence);
+      this.cdr.markForCheck();
+    }
+  }
+
+  private formValueToArray(value: string): Array<number> {
+    return value.split(' ')
+      .map(item => parseInt(item));
   }
 
 }
