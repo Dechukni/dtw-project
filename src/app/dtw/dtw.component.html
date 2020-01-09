@@ -1,1 +1,11 @@
-<p>dtw works!</p>
+<form [formGroup]="form" (ngSubmit)="runDtw()">
+    <div class="form-fields">
+        <mat-form-field class="full-width">
+            <input matInput formControlName="firstSequence" type="text" placeholder="Insert Sequence 1">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput formControlName="secondSequence" type="text" placeholder="Insert Sequence 2">
+        </mat-form-field>
+    </div>
+    <button type="submit" mat-raised-button color="primary">Run DTW</button>
+</form>
