@@ -1,11 +1,40 @@
-<form [formGroup]="form" (ngSubmit)="runDtw()">
-    <div class="form-fields">
-        <mat-form-field class="full-width">
-            <input matInput formControlName="firstSequence" type="text" placeholder="Insert Sequence 1">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <input matInput formControlName="secondSequence" type="text" placeholder="Insert Sequence 2">
-        </mat-form-field>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <form [formGroup]="form" (ngSubmit)="runDtw()">
+        <div class="form-fields">
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="firstSequence"
+              type="text"
+              placeholder="Insert Sequence 1">
+            <mat-error *ngIf="form.controls['firstSequence'].hasError('required')">
+              Field is required
+            </mat-error>
+            <mat-error *ngIf="form.controls['firstSequence'].hasError('pattern')">
+              Must be a numerical sequence
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <input
+              matInput
+              formControlName="secondSequence"
+              type="text"
+              placeholder="Insert Sequence 2">
+            <mat-error *ngIf="form.controls['secondSequence'].hasError('required')">
+              Field is required
+            </mat-error>
+            <mat-error *ngIf="form.controls['secondSequence'].hasError('pattern')">
+              Must be a numerical sequence
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <button class="mt-3" type="submit" mat-raised-button color="primary">Run DTW</button>
+      </form>
     </div>
-    <button type="submit" mat-raised-button color="primary">Run DTW</button>
-</form>
+    <div class="col-8">
+      <p>Visualization placeholder</p>
+    </div>
+  </div>
+</div>
