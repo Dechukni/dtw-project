@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DTWComponent } from './dtw/dtw.component';
 import { EditDistanceComponent } from './edit-distance/edit-distance.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     DTWComponent,
-    EditDistanceComponent
+    EditDistanceComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
