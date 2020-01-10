@@ -1,1 +1,12 @@
-<p>edit-distance works!</p>
+<form [formGroup]="form" (ngSubmit)="runEditDistance()">
+    <div class="form-fields">
+        <mat-form-field class="full-width">
+            <input matInput formControlName="firstString" type="text" placeholder="Insert String 1">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+            <input matInput formControlName="firstString" type="text" placeholder="Insert String 2">
+        </mat-form-field>
+    </div>
+    <button type="submit" mat-raised-button color="primary">Run Edit Distance</button>
+</form>
+    
