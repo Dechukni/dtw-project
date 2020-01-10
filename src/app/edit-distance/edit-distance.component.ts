@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-edit-distance',
@@ -17,9 +17,9 @@ export class EditDistanceComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      firstString: [null],
-      secondString: [null]
-    })
+      firstString: ['', [Validators.required, Validators.pattern('^\\S*$')]],
+      secondString: ['', [Validators.required, Validators.pattern('^\\S*$')]]
+    });
   }
 
   runEditDistance() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dtw',
@@ -18,9 +18,9 @@ export class DTWComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      firstSequence: [null],
-      secondSequence: [null]
-    })
+      firstSequence: ['', [Validators.required, Validators.pattern('^[0-9\\s]*$')]],
+      secondSequence: ['', [Validators.required, Validators.pattern('^[0-9\\s]*$')]]
+    });
   }
 
   runDtw() {

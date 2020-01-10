@@ -1,12 +1,40 @@
-<form [formGroup]="form" (ngSubmit)="runEditDistance()">
-    <div class="form-fields">
-        <mat-form-field class="full-width">
-            <input matInput formControlName="firstString" type="text" placeholder="Insert String 1">
-        </mat-form-field>
-        <mat-form-field class="full-width">
-            <input matInput formControlName="firstString" type="text" placeholder="Insert String 2">
-        </mat-form-field>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <form [formGroup]="form" (ngSubmit)="runEditDistance()">
+        <div class="form-fields">
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                formControlName="firstString"
+                type="text"
+                placeholder="Insert String 1">
+              <mat-error *ngIf="form.controls['firstString'].hasError('required')">
+                Field is required
+              </mat-error>
+              <mat-error *ngIf="form.controls['firstString'].hasError('pattern')">
+                Must be a string
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                formControlName="secondString"
+                type="text"
+                placeholder="Insert String 2">
+              <mat-error *ngIf="form.controls['secondString'].hasError('required')">
+                Field is required
+              </mat-error>
+              <mat-error *ngIf="form.controls['secondString'].hasError('pattern')">
+                Must be a string
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <button class="mt-3" type="submit" mat-raised-button color="primary">Run Edit Distance</button>
+      </form>
     </div>
-    <button type="submit" mat-raised-button color="primary">Run Edit Distance</button>
-</form>
-    
+    <div class="col-8">
+      <p>Visualization placeholder</p>
+    </div>
+  </div>
+</div>
