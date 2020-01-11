@@ -1,0 +1,37 @@
+$box-size: 50px;
+$border: 1px solid black;
+
+table {
+  outline: 0;
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  td:not(.sequence-cell) {
+    cursor: pointer;
+    &:hover {
+      background-color: #607d8b;
+    }
+  }
+
+  td.sequence-cell.highlight {
+    background-color: #64b5f6;
+    color: white;
+  }
+
+  td {
+    border: $border;
+    text-align: center;
+  }
+
+  td.sequence-cell {
+    border: 1px transparent solid;
+    border-right: 0 #ddd solid;
+    border-bottom: 0 #ddd solid;
+    color: #999;
+    min-width: $box-size;
+    line-height: $box-size;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
