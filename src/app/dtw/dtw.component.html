@@ -33,8 +33,65 @@
         <button class="mt-3" type="submit" mat-raised-button color="primary">Run DTW</button>
       </form>
     </div>
-    <div class="col-8">
-      <p>Visualization placeholder</p>
+  </div>
+
+  <div class="information">
+    <div class="distance" *ngIf="distance">
+      <span>Distance:</span> {{ distance }}
     </div>
+    <div class="formula">
+      <ng-container *ngIf="hovered">
+        <span class="item">{{ hovered }}</span>
+        =
+        <span class="formula__abs">
+          ABS(
+            <span class="item">{{ parentRowItem }}</span>
+            -
+            <span class="item">{{ parentColumnItem }}</span>
+          )
+        </span>
+        +
+        <span class="formula__min">
+          MIN(
+            <ng-container *ngFor="let s of siblings; let last = last">
+              <span class="item">{{ s }}</span>
+                <span class="coma" *ngIf="!last">,</span>
+            </ng-container>
+          )
+        </span>
+        =
+        <span class="formula__result">
+          {{ parentRowItem - parentColumnItem | abs }}
+          <ng-container *ngIf="siblings.length">
+            +
+            {{ siblings | minimum }}
+          </ng-container>
+        </span>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="visualizer">
+    <table>
+      <tr>
+        <td class="sequence-cell cell-corner"></td>
+        <ng-container *ngFor="let item of firstSequenceItems; let column = index">
+          <td class="sequence-cell" [ngClass]="{highlight: hoverColumn === column }">
+            {{ item }}
+          </td>
+        </ng-container>
+      </tr>
+      <tr *ngFor="let item of secondSequenceItems; let row = index">
+        <td class="sequence-cell" [ngClass]="{highlight: hoverRow === row }">{{ item }}</td>
+        <ng-container *ngFor="let empty of firstSequenceItems; let column = index">
+          <td [highlight]="[row, column]"
+              [hovered]="[hoverRow, hoverColumn]"
+              (mouseover)="onMouseOver(row, column)"
+              (mouseleave)="onMouseLeave()">
+            {{ resultMatrix[column][row] }}
+          </td>
+        </ng-container>
+      </tr>
+    </table>
   </div>
 </div>

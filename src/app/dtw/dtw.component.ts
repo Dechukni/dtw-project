@@ -1,5 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
+
+const formValueToArray = (value: string): Array<number> => {
+  return value.split(' ')
+    .map(item => parseInt(item, 10));
+};
 
 @Component({
   selector: 'app-dtw',
@@ -9,8 +16,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class DTWComponent implements OnInit {
   form: FormGroup;
+  firstSequenceItems: Array<number>;
+  secondSequenceItems: Array<number>;
+  resultMatrix: Array<number[]>;
+  distance: number;
+  hoverRow: number;
+  hoverColumn: number;
 
-  constructor(private readonly fb: FormBuilder) { }
+  parentRowItem: number;
+  parentColumnItem: number;
+  siblings: Array<number>;
+  hovered: number;
+
+  constructor(private readonly fb: FormBuilder,
+              private readonly cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.buildForm();
@@ -18,13 +37,57 @@ export class DTWComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      firstSequence: ['', [Validators.required, Validators.pattern('^[0-9\\s]*$')]],
-      secondSequence: ['', [Validators.required, Validators.pattern('^[0-9\\s]*$')]]
+      firstSequence: ['4 2 1 4 8 8 9 3 2 3 2 2 6 9 2 1 1 6 1', [Validators.required, Validators.pattern('^[0-9\\s]*$')]],
+      secondSequence: ['3 2 2 1 1 8 3 2 6 9 1 6 1', [Validators.required, Validators.pattern('^[0-9\\s]*$')]]
     });
   }
 
   runDtw() {
-    console.log('Run DTW', this.form.value);
+    if (this.form.valid) {
+      this.firstSequenceItems = formValueToArray(this.form.value.firstSequence);
+      this.secondSequenceItems = formValueToArray(this.form.value.secondSequence);
+
+      const { matrix, distance } = DynamicTimeWarping.run(this.firstSequenceItems, this.secondSequenceItems);
+
+      this.resultMatrix = matrix;
+      this.distance = distance;
+
+      this.cdr.markForCheck();
+    }
+  }
+
+  onMouseOver(row: number, column: number) {
+    this.hoverRow = row;
+    this.hoverColumn = column;
+
+    this.parentRowItem = this.secondSequenceItems[row];
+    this.parentColumnItem = this.firstSequenceItems[column];
+    this.hovered = this.resultMatrix[column][row];
+    this.siblings = this.getSiblings(row, column);
+  }
+
+  onMouseLeave() {
+    this.hovered = undefined;
+    this.hoverRow = undefined;
+    this.hoverColumn = undefined;
+  }
+
+  private getSiblings(row, column) {
+    if ((column === 0) && (row === 0)) {
+      return [];
+    }
+
+    if (column === 0) {
+      return [
+        this.resultMatrix[0][row - 1],
+      ];
+    }
+
+    return [
+      this.resultMatrix[column - 1][row],
+      this.resultMatrix[column - 1][row - 1],
+      this.resultMatrix[column][row - 1],
+    ].filter(cur => cur);
   }
 
 }
