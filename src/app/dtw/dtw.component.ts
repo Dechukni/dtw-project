@@ -3,6 +3,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
 
+const formValueToArray = (value: string): Array<number> => {
+  return value.split(' ')
+    .map(item => parseInt(item, 10));
+};
+
 @Component({
   selector: 'app-dtw',
   templateUrl: './dtw.component.html',
@@ -12,11 +17,16 @@ import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
 export class DTWComponent implements OnInit {
   form: FormGroup;
   firstSequenceItems: Array<number>;
-  secondSequenceItems: Array<number>
+  secondSequenceItems: Array<number>;
   resultMatrix: Array<number[]>;
   distance: number;
   hoverRow: number;
   hoverColumn: number;
+
+  parentRowItem: number;
+  parentColumnItem: number;
+  siblings: Array<number>;
+  hovered: number;
 
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
@@ -34,14 +44,14 @@ export class DTWComponent implements OnInit {
 
   runDtw() {
     if (this.form.valid) {
-      this.firstSequenceItems = this.formValueToArray(this.form.value.firstSequence);
-      this.secondSequenceItems = this.formValueToArray(this.form.value.secondSequence);
-  
+      this.firstSequenceItems = formValueToArray(this.form.value.firstSequence);
+      this.secondSequenceItems = formValueToArray(this.form.value.secondSequence);
+
       const { matrix, distance } = DynamicTimeWarping.run(this.firstSequenceItems, this.secondSequenceItems);
-  
+
       this.resultMatrix = matrix;
       this.distance = distance;
-  
+
       this.cdr.markForCheck();
     }
   }
@@ -49,11 +59,35 @@ export class DTWComponent implements OnInit {
   onMouseOver(row: number, column: number) {
     this.hoverRow = row;
     this.hoverColumn = column;
+
+    this.parentRowItem = this.secondSequenceItems[row];
+    this.parentColumnItem = this.firstSequenceItems[column];
+    this.hovered = this.resultMatrix[column][row];
+    this.siblings = this.getSiblings(row, column);
   }
 
-  private formValueToArray(value: string): Array<number> {
-    return value.split(' ')
-      .map(item => parseInt(item));
+  onMouseLeave() {
+    this.hovered = undefined;
+    this.hoverRow = undefined;
+    this.hoverColumn = undefined;
+  }
+
+  private getSiblings(row, column) {
+    if ((column === 0) && (row === 0)) {
+      return [];
+    }
+
+    if (column === 0) {
+      return [
+        this.resultMatrix[0][row - 1],
+      ];
+    }
+
+    return [
+      this.resultMatrix[column - 1][row],
+      this.resultMatrix[column - 1][row - 1],
+      this.resultMatrix[column][row - 1],
+    ].filter(cur => cur);
   }
 
 }

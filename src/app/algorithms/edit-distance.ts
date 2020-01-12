@@ -28,13 +28,8 @@ export class EditDistance {
     }
 
     return {
-      matrix: this.format(dist),
-      distance: dist[s1.length - 1][s2.length - 1],
+      matrix: dist,
+      distance: dist[s2.length][s1.length],
     };
-  }
-
-  static format(array: Array<number[]>) {
-    return array.slice(1, array.length)
-      .map(cur => cur.slice(1, cur.length));
   }
 }

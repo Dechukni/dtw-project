@@ -3,6 +3,10 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 
 import { EditDistance } from '../algorithms/edit-distance';
 
+const formValueToArray = (value: string): Array<string> => {
+  return value.split('');
+};
+
 @Component({
   selector: 'app-edit-distance',
   templateUrl: './edit-distance.component.html',
@@ -16,7 +20,13 @@ export class EditDistanceComponent implements OnInit {
   resultMatrix: Array<number[]>;
   distance: number;
   hoverRow: number;
-  hoverColumn: number
+  hoverColumn: number;
+
+  parentRowItem: string;
+  parentColumnItem: string;
+  siblings: Array<number>;
+  hovered: number;
+  helperMatrix: Array<number[]>;
 
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
@@ -34,13 +44,15 @@ export class EditDistanceComponent implements OnInit {
 
   runEditDistance() {
     if (this.form.valid) {
-      this.firstStringItems = this.formValueToArray(this.form.value.firstString);
-      this.secondStringItems = this.formValueToArray(this.form.value.secondString);
+      this.firstStringItems = formValueToArray(this.form.value.firstString);
+      this.secondStringItems = formValueToArray(this.form.value.secondString);
 
       const { matrix, distance } = EditDistance.run(this.firstStringItems, this.secondStringItems);
 
       this.resultMatrix = matrix;
       this.distance = distance;
+
+      console.log(this.resultMatrix);
 
       this.cdr.markForCheck();
     }
@@ -49,9 +61,34 @@ export class EditDistanceComponent implements OnInit {
   onMouseOver(row: number, column: number) {
     this.hoverRow = row;
     this.hoverColumn = column;
+
+    this.parentRowItem = this.secondStringItems[row - 1];
+    this.parentColumnItem = this.firstStringItems[column - 1];
+    this.hovered = this.resultMatrix[row][column];
+    this.siblings = this.getSiblings(row, column);
   }
 
-  private formValueToArray(value: string): Array<string> {
-    return value.split('');
+  onMouseLeave() {
+    this.hovered = undefined;
+    this.hoverRow = undefined;
+    this.hoverColumn = undefined;
+  }
+
+  private getSiblings(row, column) {
+    if ((column === 0) && (row === 0)) {
+      return [];
+    }
+
+    if (row === 0) {
+      return [
+        this.resultMatrix[0][column - 1],
+      ];
+    }
+
+    return [
+      this.resultMatrix[row - 1][column - 1],
+      this.resultMatrix[row][column - 1],
+      this.resultMatrix[row - 1][column],
+    ].filter(cur => cur !== undefined);
   }
 }

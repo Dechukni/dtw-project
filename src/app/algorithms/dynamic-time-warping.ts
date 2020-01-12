@@ -1,10 +1,5 @@
-interface Result {
-  matrix: Array<number[]>;
-  distance: number;
-}
-
 export class DynamicTimeWarping {
-  static run(s1: Array<number>, s2: Array<number>): Result {
+  static run(s1: Array<number>, s2: Array<number>) {
     const dtwDist = [];
 
     for (let i = 0; i < s1.length + 1; i++) {

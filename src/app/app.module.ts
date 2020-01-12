@@ -11,6 +11,9 @@ import { HeaderComponent } from './header/header.component';
 import { DTWComponent } from './dtw/dtw.component';
 import { EditDistanceComponent } from './edit-distance/edit-distance.component';
 import { FooterComponent } from './footer/footer.component';
+import { HighlightDirective } from './directives/highlight.directive';
+import { AbsPipe } from './pipes/abs.pipe';
+import { MinimumPipe } from './pipes/minimum.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     DTWComponent,
     EditDistanceComponent,
-    FooterComponent
+    FooterComponent,
+    HighlightDirective,
+    AbsPipe,
+    MinimumPipe
   ],
   imports: [
     BrowserModule,

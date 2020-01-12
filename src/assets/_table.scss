@@ -1,5 +1,9 @@
 $box-size: 50px;
 $border: 1px solid black;
+$parentBg: #64b5f6;
+$hoverBg: #66bb6a;
+$siblingBg: #ffee58;
+$diagonalBg: #ffb300;
 
 table {
   outline: 0;
@@ -7,16 +11,24 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 
-  td:not(.sequence-cell) {
+  td:not(.sequence-cell):not(.helper-cell) {
     cursor: pointer;
     &:hover {
-      background-color: #607d8b;
+      background-color: $hoverBg;
     }
   }
 
   td.sequence-cell.highlight {
-    background-color: #64b5f6;
-    color: white;
+    background-color: $parentBg;
+    color: black;
+  }
+
+  td.highlight {
+    background-color: $siblingBg;
+  }
+
+  td.highlight.diagonal {
+    background-color: $diagonalBg;
   }
 
   td {
@@ -33,5 +45,11 @@ table {
     line-height: $box-size;
     text-align: center;
     vertical-align: middle;
+  }
+
+  .helper-cell {
+    min-width: $box-size;
+    line-height: $box-size;
+    background-color: #e0e0e0;
   }
 }

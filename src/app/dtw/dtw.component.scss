@@ -4,7 +4,45 @@ form {
   width: 550px;
 }
 
-.visualizer {
+.visualizer, .information {
   margin: 15px 0;
   overflow: auto;
+}
+
+.distance {
+  margin-bottom: 15px;
+  > span {
+    font-weight: bold;
+    color: #3f51b5;
+  }
+}
+
+.formula {
+  min-height: 50px;
+  > .item {
+    background-color: $hoverBg;
+  }
+  .item {
+    display: inline-block;
+    text-align: center;
+    line-height: $box-size;
+    width: $box-size;
+    height: $box-size;
+    border: $border
+  }
+
+  &__abs {
+    .item {
+      background-color: $parentBg;
+    }
+  }
+
+  &__min {
+    .item {
+      background-color: $siblingBg;
+    }
+    .coma {
+      padding: 5px;
+    }
+  }
 }
