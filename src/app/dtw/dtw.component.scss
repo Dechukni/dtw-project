@@ -1,16 +1,6 @@
 @import "../../assets/table";
 
-form {
-  width: 550px;
-}
-
-.visualizer, .information {
-  margin: 15px 0;
-  overflow: auto;
-}
-
 .distance {
-  margin-bottom: 15px;
   > span {
     font-weight: bold;
     color: #3f51b5;
@@ -18,10 +8,16 @@ form {
 }
 
 .formula {
-  min-height: 50px;
+  min-height: $box-size;
+
+  > span {
+    line-height: 1.1 * $box-size;
+  }
+
   > .item {
     background-color: $hoverBg;
   }
+
   .item {
     display: inline-block;
     text-align: center;

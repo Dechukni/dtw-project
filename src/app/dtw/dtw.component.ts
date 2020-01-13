@@ -5,7 +5,7 @@ import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
 
 const formValueToArray = (value: string): Array<number> => {
   return value.split(' ')
-    .map(item => parseInt(item, 10));
+    .map(item => parseInt(item, 10)).filter(item => !Number.isNaN(item));
 };
 
 @Component({
@@ -80,6 +80,12 @@ export class DTWComponent implements OnInit {
     if (column === 0) {
       return [
         this.resultMatrix[0][row - 1],
+      ];
+    }
+
+    if (row === 0) {
+      return [
+        this.resultMatrix[column - 1][0],
       ];
     }
 

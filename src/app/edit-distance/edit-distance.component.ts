@@ -52,8 +52,6 @@ export class EditDistanceComponent implements OnInit {
       this.resultMatrix = matrix;
       this.distance = distance;
 
-      console.log(this.resultMatrix);
-
       this.cdr.markForCheck();
     }
   }
@@ -77,6 +75,12 @@ export class EditDistanceComponent implements OnInit {
   private getSiblings(row, column) {
     if ((column === 0) && (row === 0)) {
       return [];
+    }
+
+    if (column === 0) {
+      return [
+        this.resultMatrix[row - 1][0],
+      ];
     }
 
     if (row === 0) {
