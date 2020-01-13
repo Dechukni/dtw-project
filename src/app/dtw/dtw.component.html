@@ -74,7 +74,7 @@
 
   <div class="row mt-3">
     <div class="col-12 overflow-auto">
-      <table>
+      <table [ngClass]="getTableSize()">
         <tr>
           <td class="sequence-cell cell-corner"></td>
           <ng-container *ngFor="let item of firstSequenceItems; let column = index">

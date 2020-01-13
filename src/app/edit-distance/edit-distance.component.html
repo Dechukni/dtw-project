@@ -72,7 +72,7 @@
 
   <div class="row mt-3">
     <div class="col-12 overflow-auto">
-      <table *ngIf="resultMatrix">
+      <table *ngIf="resultMatrix" [ngClass]="getTableSize()">
         <tr>
           <td class="sequence-cell cell-corner"></td>
           <td class="sequence-cell cell-corner"></td>

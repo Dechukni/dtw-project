@@ -53,3 +53,17 @@ table {
     background-color: #e0e0e0;
   }
 }
+
+.table-small {
+  td {
+    min-width: 0.8 * $box-size !important;
+    line-height: 0.8 * $box-size !important;
+  }
+}
+
+.table-tiny {
+  td {
+    min-width: 0.6 * $box-size !important;
+    line-height: 0.6 * $box-size !important;
+  }
+}

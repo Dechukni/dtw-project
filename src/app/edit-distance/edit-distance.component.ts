@@ -28,11 +28,16 @@ export class EditDistanceComponent implements OnInit {
   hovered: number;
   helperMatrix: Array<number[]>;
 
+  tableSmall: boolean;
+  tableTiny: boolean;
+
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.buildForm();
+    this.tableSmall = false;
+    this.tableTiny = false;
   }
 
   buildForm() {
@@ -42,12 +47,37 @@ export class EditDistanceComponent implements OnInit {
     });
   }
 
+  getTableSize() {
+    return {
+      'table-small': this.tableSmall,
+      'table-tiny': this.tableTiny
+    };
+  }
+
+  setTableSize(firstSequenceItemsLength, secondSequenceItemsLength) {
+    const maxLength = Math.max(firstSequenceItemsLength, secondSequenceItemsLength);
+    if (maxLength > 25) {
+      this.tableTiny = true;
+      this.tableSmall = false;
+    } else if (maxLength > 20) {
+      this.tableTiny = false;
+      this.tableSmall = true;
+    } else {
+      this.tableTiny = false;
+      this.tableSmall = false;
+    }
+
+    return ;
+  }
+
   runEditDistance() {
     if (this.form.valid) {
       this.firstStringItems = formValueToArray(this.form.value.firstString);
       this.secondStringItems = formValueToArray(this.form.value.secondString);
 
       const { matrix, distance } = EditDistance.run(this.firstStringItems, this.secondStringItems);
+
+      this.setTableSize(this.firstStringItems.length, this.secondStringItems.length);
 
       this.resultMatrix = matrix;
       this.distance = distance;
