@@ -100,6 +100,7 @@
             <ng-template #tableCell>
               <td [highlight]="[rowIndex, cellIndex]"
                   [hovered]="[hoverRow, hoverColumn]"
+                  [path]="path"
                   [highlightDiagonal]="true"
                   (mouseover)="onMouseOver(rowIndex, cellIndex)"
                   (mouseleave)="onMouseLeave()">

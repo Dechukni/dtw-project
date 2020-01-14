@@ -38,4 +38,36 @@ export class DynamicTimeWarping {
     return array.slice(1, array.length)
       .map(cur => cur.slice(1, cur.length));
   }
+
+  static getPath(matrix: Array<number[]>) {
+    const path = new Array();
+    path.push([matrix[0].length - 1, matrix.length - 1]);
+
+    let i = matrix.length - 1;
+    let j = matrix[0].length - 1;
+
+    while (i >= 1 && j >= 1) {
+      const minValue = Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
+      
+      if (matrix[i - 1][j - 1] == minValue) {
+        path.push([j - 1, i - 1]);
+        i = i - 1;
+        j = j - 1;
+        continue;
+      }
+      if (matrix[i - 1][j] == minValue) {
+        path.push([j, i - 1]);
+        i = i - 1;
+        j = j;
+        continue;
+      }
+      if (matrix[i][j - 1] == minValue) {
+        path.push([j - 1, i]);
+        j = j - 1;
+        i = i;
+        continue;
+      }
+    }
+    return path.reverse();
+  }
 }

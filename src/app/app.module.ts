@@ -24,7 +24,7 @@ import { MinimumPipe } from './pipes/minimum.pipe';
     FooterComponent,
     HighlightDirective,
     AbsPipe,
-    MinimumPipe
+    MinimumPipe,
   ],
   imports: [
     BrowserModule,

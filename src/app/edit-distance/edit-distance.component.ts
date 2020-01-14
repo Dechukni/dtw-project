@@ -30,6 +30,7 @@ export class EditDistanceComponent implements OnInit {
 
   tableSmall: boolean;
   tableTiny: boolean;
+  path: Array<number[]>;
 
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
@@ -81,6 +82,8 @@ export class EditDistanceComponent implements OnInit {
 
       this.resultMatrix = matrix;
       this.distance = distance;
+
+      this.path = EditDistance.getPath(matrix);
 
       this.cdr.markForCheck();
     }

@@ -1,9 +1,10 @@
 $box-size: 50px;
 $border: 1px solid black;
 $parentBg: #64b5f6;
-$hoverBg: #66bb6a;
+$hoverBg: #b39ddb;
 $siblingBg: #ffee58;
 $diagonalBg: #ffb300;
+$pathBg: #66bb6a;
 
 table {
   outline: 0;
@@ -51,6 +52,10 @@ table {
     min-width: $box-size;
     line-height: $box-size;
     background-color: #e0e0e0;
+  }
+
+  .path {
+    background-color: $pathBg;
   }
 }
 

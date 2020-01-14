@@ -31,6 +31,8 @@ export class DTWComponent implements OnInit {
   tableSmall: boolean;
   tableTiny: boolean;
 
+  path: Array<number[]>
+
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
 
@@ -81,6 +83,7 @@ export class DTWComponent implements OnInit {
 
       this.resultMatrix = matrix;
       this.distance = distance;
+      this.path = DynamicTimeWarping.getPath(matrix);
 
       this.cdr.markForCheck();
     }
