@@ -11,6 +11,9 @@ export class HighlightDirective {
   @Input()
   highlightDiagonal = false;
 
+  @Input()
+  path: Array<number> = [];
+
   @HostBinding('class.highlight')
   get elementClass() {
     const [row, column] = this.highlight;
@@ -32,6 +35,13 @@ export class HighlightDirective {
 
     return false;
   }
+
+  @HostBinding('class.path')
+    get pathClass() {
+      const [row, column] = this.highlight;
+      
+      return this.path.find(cur => cur[0] === row && cur[1] === column);
+    }
 
   constructor() { }
 }

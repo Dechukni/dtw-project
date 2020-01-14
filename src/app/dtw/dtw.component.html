@@ -88,6 +88,7 @@
           <ng-container *ngFor="let empty of firstSequenceItems; let column = index">
             <td [highlight]="[row, column]"
                 [hovered]="[hoverRow, hoverColumn]"
+                [path]="path"
                 (mouseover)="onMouseOver(row, column)"
                 (mouseleave)="onMouseLeave()">
               {{ resultMatrix[column][row] }}
