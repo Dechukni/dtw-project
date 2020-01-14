@@ -13,7 +13,7 @@
                 Field is required
               </mat-error>
               <mat-error *ngIf="form.controls['firstString'].hasError('pattern')">
-                Must be a string
+                Must be a single string
               </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width">
@@ -26,24 +26,22 @@
                 Field is required
               </mat-error>
               <mat-error *ngIf="form.controls['secondString'].hasError('pattern')">
-                Must be a string
+                Must be a single string
               </mat-error>
             </mat-form-field>
         </div>
         <button class="mt-3" type="submit" mat-raised-button color="primary">Run Edit Distance</button>
       </form>
     </div>
-  </div>
-
-  <div class="information">
-    <div class="distance" *ngIf="distance">
-      <span>Distance:</span> {{ distance }}
-    </div>
-    <div class="formula">
-      <ng-container *ngIf="hovered !== undefined">
-        <span class="item">{{ hovered }}</span>
-        =
-        <span class="formula__min">
+    <div class="col-8">
+      <div class="distance" *ngIf="distance">
+        <span>Distance:</span> {{ distance }}
+      </div>
+      <div class="mt-3 formula">
+        <ng-container *ngIf="hovered !== undefined">
+          <span class="item">{{ hovered }}</span>
+          =
+          <span class="formula__min">
           MIN(
             <ng-container *ngFor="let s of siblings; let last = last; let index = index">
               <span class="formula__if" *ngIf="index === 0">
@@ -59,55 +57,58 @@
             </ng-container>
           )
         </span>
-        =
-        <span class="formula__result">
+          =
+          <span class="formula__result">
           MIN(
             <span>{{ siblings[1] + (parentRowItem === parentColumnItem ? 0 : 1) }}</span>,
             <span>{{ siblings[0] + 1 }}</span>,
             <span>{{ siblings[2] + 1 }}</span>
           )
         </span>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </div>
 
-  <div class="visualizer">
-    <table *ngIf="resultMatrix">
-      <tr>
-        <td class="sequence-cell cell-corner"></td>
-        <td class="sequence-cell cell-corner"></td>
-        <ng-container *ngFor="let item of firstStringItems; let column = index">
-          <td class="sequence-cell" [ngClass]="{highlight: hoverColumn - 1 === column }">
-            {{ item }}
-          </td>
-        </ng-container>
-      </tr>
+  <div class="row mt-3">
+    <div class="col-12 overflow-auto">
+      <table *ngIf="resultMatrix" [ngClass]="getTableSize()">
+        <tr>
+          <td class="sequence-cell cell-corner"></td>
+          <td class="sequence-cell cell-corner"></td>
+          <ng-container *ngFor="let item of firstStringItems; let column = index">
+            <td class="sequence-cell" [ngClass]="{highlight: hoverColumn - 1 === column }">
+              {{ item }}
+            </td>
+          </ng-container>
+        </tr>
 
-      <tr *ngFor="let row of resultMatrix; let rowIndex = index">
-        <td class="sequence-cell"
-            [ngClass]="{highlight: hoverRow === rowIndex }"
-            *ngIf="rowIndex !== 0">{{ secondStringItems[rowIndex - 1] }}</td>
-        <td class="sequence-cell cell-corner" *ngIf="rowIndex === 0"></td>
+        <tr *ngFor="let row of resultMatrix; let rowIndex = index">
+          <td class="sequence-cell"
+              [ngClass]="{highlight: hoverRow === rowIndex }"
+              *ngIf="rowIndex !== 0">{{ secondStringItems[rowIndex - 1] }}</td>
+          <td class="sequence-cell cell-corner" *ngIf="rowIndex === 0"></td>
 
-        <ng-container *ngFor="let cell of row; let cellIndex = index">
-          <td *ngIf="rowIndex === 0 || cellIndex === 0; else tableCell"
-              class="helper-cell"
-              [highlight]="[rowIndex, cellIndex]"
-              [highlightDiagonal]="true"
-              [hovered]="[hoverRow, hoverColumn]">
-            {{ cell }}
-          </td>
-          <ng-template #tableCell>
-            <td [highlight]="[rowIndex, cellIndex]"
-                [hovered]="[hoverRow, hoverColumn]"
+          <ng-container *ngFor="let cell of row; let cellIndex = index">
+            <td *ngIf="rowIndex === 0 || cellIndex === 0; else tableCell"
+                class="helper-cell"
+                [highlight]="[rowIndex, cellIndex]"
                 [highlightDiagonal]="true"
-                (mouseover)="onMouseOver(rowIndex, cellIndex)"
-                (mouseleave)="onMouseLeave()">
+                [hovered]="[hoverRow, hoverColumn]">
               {{ cell }}
             </td>
-          </ng-template>
-        </ng-container>
-      </tr>
-    </table>
+            <ng-template #tableCell>
+              <td [highlight]="[rowIndex, cellIndex]"
+                  [hovered]="[hoverRow, hoverColumn]"
+                  [highlightDiagonal]="true"
+                  (mouseover)="onMouseOver(rowIndex, cellIndex)"
+                  (mouseleave)="onMouseLeave()">
+                {{ cell }}
+              </td>
+            </ng-template>
+          </ng-container>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>

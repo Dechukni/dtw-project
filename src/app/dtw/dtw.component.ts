@@ -5,7 +5,7 @@ import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
 
 const formValueToArray = (value: string): Array<number> => {
   return value.split(' ')
-    .map(item => parseInt(item, 10));
+    .map(item => parseInt(item, 10)).filter(item => !Number.isNaN(item));
 };
 
 @Component({
@@ -28,11 +28,16 @@ export class DTWComponent implements OnInit {
   siblings: Array<number>;
   hovered: number;
 
+  tableSmall: boolean;
+  tableTiny: boolean;
+
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.form = this.buildForm();
+    this.tableSmall = false;
+    this.tableTiny = false;
   }
 
   buildForm() {
@@ -42,12 +47,37 @@ export class DTWComponent implements OnInit {
     });
   }
 
+  getTableSize() {
+    return {
+      'table-small': this.tableSmall,
+      'table-tiny': this.tableTiny
+    };
+  }
+
+  setTableSize(firstSequenceItemsLength, secondSequenceItemsLength) {
+    const maxLength = Math.max(firstSequenceItemsLength, secondSequenceItemsLength);
+    if (maxLength > 25) {
+      this.tableTiny = true;
+      this.tableSmall = false;
+    } else if (maxLength > 20) {
+      this.tableTiny = false;
+      this.tableSmall = true;
+    } else {
+      this.tableTiny = false;
+      this.tableSmall = false;
+    }
+
+    return ;
+  }
+
   runDtw() {
     if (this.form.valid) {
       this.firstSequenceItems = formValueToArray(this.form.value.firstSequence);
       this.secondSequenceItems = formValueToArray(this.form.value.secondSequence);
 
       const { matrix, distance } = DynamicTimeWarping.run(this.firstSequenceItems, this.secondSequenceItems);
+
+      this.setTableSize(this.firstSequenceItems.length, this.secondSequenceItems.length);
 
       this.resultMatrix = matrix;
       this.distance = distance;
@@ -80,6 +110,12 @@ export class DTWComponent implements OnInit {
     if (column === 0) {
       return [
         this.resultMatrix[0][row - 1],
+      ];
+    }
+
+    if (row === 0) {
+      return [
+        this.resultMatrix[column - 1][0],
       ];
     }
 
