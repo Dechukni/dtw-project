@@ -60,9 +60,9 @@
           =
           <span class="formula__result">
           MIN(
-            <span>{{ siblings[1] + (parentRowItem === parentColumnItem ? 0 : 1) }}</span>,
-            <span>{{ siblings[0] + 1 }}</span>,
-            <span>{{ siblings[2] + 1 }}</span>
+            <span>{{ siblings[0] + (parentColumnItem === parentRowItem ? 0 : 1) }}</span>,
+            <span>{{ siblings[1] + 1}}</span>,
+            <span>{{ siblings[2] + 1}}</span>
           )
         </span>
         </ng-container>
