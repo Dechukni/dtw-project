@@ -73,7 +73,7 @@
   </div>
 
   <div class="row mt-3">
-    <div class="col-12 overflow-auto">
+    <div class="col-12 overflow-auto d-flex justify-content-center">
       <table [ngClass]="getTableSize()">
         <tr>
           <td class="sequence-cell cell-corner"></td>
@@ -96,6 +96,17 @@
           </ng-container>
         </tr>
       </table>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col-12 overflow-auto d-flex justify-content-center">
+      <app-dtw-graph *ngIf="distance"
+        [firstSequenceItems]="firstSequenceItems"
+        [secondSequenceItems]="secondSequenceItems"
+        [path]="path"
+      >
+      </app-dtw-graph>
     </div>
   </div>
 </div>
