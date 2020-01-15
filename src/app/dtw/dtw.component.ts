@@ -5,7 +5,7 @@ import { DynamicTimeWarping } from '../algorithms/dynamic-time-warping';
 
 const formValueToArray = (value: string): Array<number> => {
   return value.split(' ')
-    .map(item => parseInt(item, 10)).filter(item => !Number.isNaN(item));
+    .map(item => parseFloat(item)).filter(item => !Number.isNaN(item));
 };
 
 @Component({
@@ -31,7 +31,7 @@ export class DTWComponent implements OnInit {
   tableSmall: boolean;
   tableTiny: boolean;
 
-  path: Array<number[]>
+  path: Array<number[]>;
 
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
@@ -44,8 +44,8 @@ export class DTWComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      firstSequence: ['4 2 1 4 8 8 9 3 2 3 2 2 6 9 2 1 1 6 1', [Validators.required, Validators.pattern('^[0-9\\s]*$')]],
-      secondSequence: ['3 2 2 1 1 8 3 2 6 9 1 6 1', [Validators.required, Validators.pattern('^[0-9\\s]*$')]]
+      firstSequence: ['4 5 6 7 8 10 12', [Validators.required, Validators.pattern('^[0-9.\\s]*$')]],
+      secondSequence: ['1 2 3 5 6', [Validators.required, Validators.pattern('^[0-9.\\s]*$')]]
     });
   }
 
