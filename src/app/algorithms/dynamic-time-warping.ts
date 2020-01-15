@@ -48,17 +48,17 @@ export class DynamicTimeWarping {
 
     while (i > 0 || j > 0) {
       const minValue = Math.min(
-        matrix[i - 1] && matrix[i - 1][j] ? matrix[i - 1][j] : Infinity,
-        matrix[i - 1] && matrix[i - 1][j - 1] ? matrix[i - 1][j - 1] : Infinity,
-        matrix[i][j - 1] ? matrix[i][j - 1] : Infinity
+        matrix[i - 1] && (!!matrix[i - 1][j] || matrix[i - 1][j] === 0) ? matrix[i - 1][j] : Infinity,
+        matrix[i - 1] && (!!matrix[i - 1][j - 1] || matrix[i - 1][j - 1] === 0) ? matrix[i - 1][j - 1] : Infinity,
+        (!!matrix[i][j - 1] || matrix[i][j - 1] === 0) ? matrix[i][j - 1] : Infinity
       );
 
-      if (matrix[i - 1] && matrix[i - 1][j - 1] && matrix[i - 1][j - 1] === minValue) {
+      if (matrix[i - 1] && (!!matrix[i - 1][j - 1] || matrix[i - 1][j - 1] === 0) && matrix[i - 1][j - 1] === minValue) {
         i = i - 1;
         j = j - 1;
-      } else if (matrix[i - 1] && matrix[i - 1][j] && matrix[i - 1][j] === minValue) {
+      } else if (matrix[i - 1] && (!!matrix[i - 1][j] || matrix[i - 1][j] === 0) && matrix[i - 1][j] === minValue) {
         i = i - 1;
-      } else if (matrix[i][j - 1] && matrix[i][j - 1] === minValue) {
+      } else if ((!!matrix[i][j - 1] || matrix[i][j - 1] === 0) && matrix[i][j - 1] === minValue) {
         j = j - 1;
       }
 
