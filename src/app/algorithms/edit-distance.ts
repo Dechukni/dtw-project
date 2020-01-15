@@ -39,30 +39,26 @@ export class EditDistance {
 
     let i = matrix.length - 1;
     let j = matrix[0].length - 1;
-    while (i >= 1 && j >= 1) {
-      const minValue = Math.min(matrix[i - 1][j], matrix[i][j - 1], matrix[i - 1][j - 1]);
 
-      if (matrix[i - 1][j - 1] === minValue) {
-        path.push([i - 1, j - 1]);
+    while (i > 0 || j > 0) {
+      const minValue = Math.min(
+        matrix[i - 1] && matrix[i - 1][j] ? matrix[i - 1][j] : Infinity,
+        matrix[i - 1] && matrix[i - 1][j - 1] ? matrix[i - 1][j - 1] : Infinity,
+        matrix[i][j - 1] ? matrix[i][j - 1] : Infinity
+      );
+
+      if (matrix[i - 1] && matrix[i - 1][j - 1] && matrix[i - 1][j - 1] === minValue) {
         i = i - 1;
         j = j - 1;
-        continue;
-      }
-
-      if (matrix[i - 1][j] === minValue) {
-        path.push([i - 1, j]);
+      } else if (matrix[i - 1] && matrix[i - 1][j] && matrix[i - 1][j] === minValue) {
         i = i - 1;
-        j = j;
-        continue;
+      } else if (matrix[i][j - 1] && matrix[i][j - 1] === minValue) {
+        j = j - 1;
       }
 
-      if (matrix[i][j - 1] === minValue) {
-        path.push([i, j - 1]);
-        j = j - 1;
-        i = i;
-        continue;
-      }
+      path.push([i, j]);
     }
+
     return path.reverse();
   }
 }
