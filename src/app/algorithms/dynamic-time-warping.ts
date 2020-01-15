@@ -30,7 +30,7 @@ export class DynamicTimeWarping {
 
     return {
       matrix: this.format(dtwDist),
-      distance: dtwDist[s1.length - 1][s2.length - 1],
+      distance: dtwDist[s1.length][s2.length],
     };
   }
 
