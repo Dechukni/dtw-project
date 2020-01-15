@@ -98,8 +98,8 @@
               {{ cell }}
             </td>
             <ng-template #tableCell>
-              <td [highlight]="[rowIndex, cellIndex]"
-                  [hovered]="[hoverRow, hoverColumn]"
+              <td [highlight]="[rowIndex - 1, cellIndex - 1]"
+                  [hovered]="[hoverRow - 1, hoverColumn - 1]"
                   [path]="path"
                   [highlightDiagonal]="true"
                   (mouseover)="onMouseOver(rowIndex, cellIndex)"

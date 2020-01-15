@@ -30,7 +30,7 @@ export class EditDistanceComponent implements OnInit {
 
   tableSmall: boolean;
   tableTiny: boolean;
-  path: Array<number[]>;
+  path: Array<number>;
 
   constructor(private readonly fb: FormBuilder,
               private readonly cdr: ChangeDetectorRef) { }
