@@ -13,23 +13,31 @@ table {
   border-spacing: 0;
 
   td:not(.sequence-cell):not(.helper-cell) {
-    cursor: pointer;
-    &:hover {
-      background-color: $hoverBg;
+    @media only screen and (min-width: 768px) {
+      cursor: pointer;
+      &:hover {
+        background-color: $hoverBg;
+      }
     }
   }
 
   td.sequence-cell.highlight {
-    background-color: $parentBg;
-    color: black;
+    @media only screen and (min-width: 768px) {
+      background-color: $parentBg;
+      color: black;
+    }
   }
 
   td.highlight {
-    background-color: $siblingBg;
+    @media only screen and (min-width: 768px) {
+      background-color: $siblingBg;
+    }
   }
 
   td.highlight.diagonal {
-    background-color: $diagonalBg;
+    @media only screen and (min-width: 768px) {
+      background-color: $diagonalBg;
+    }
   }
 
   td {
@@ -70,5 +78,12 @@ table {
   td {
     min-width: 0.6 * $box-size !important;
     line-height: 0.6 * $box-size !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  td {
+    min-width: 0.5 * $box-size !important;
+    line-height: 0.5 * $box-size !important;
   }
 }

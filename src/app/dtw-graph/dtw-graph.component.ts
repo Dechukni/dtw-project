@@ -21,7 +21,7 @@ export class DtwGraphComponent implements OnChanges {
   @Input() path: Array<number[]>;
 
   data: Array<LineData>;
-  view: any[] = [700, 300];
+  view: any[];
 
   // options
   legend = true;
@@ -40,7 +40,19 @@ export class DtwGraphComponent implements OnChanges {
     domain: ['#7aa3e5', '#5AA454', '#E44D25']
   };
 
-  constructor() {}
+  constructor() {
+    this.view = [
+      innerWidth >= 768 ? innerWidth / 1.3 : innerWidth / 1.1,
+      innerWidth >= 768 ? 400 : 200
+    ];
+  }
+
+  onResize(event) {
+    this.view = [
+      event.target.innerWidth >= 768 ? event.target.innerWidth / 1.3 : event.target.innerWidth / 1.1,
+      event.target.innerWidth >= 768 ? 400 : 200
+    ];
+  }
 
   ngOnChanges() {
     // DTW generation
